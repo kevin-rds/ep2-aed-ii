@@ -10,6 +10,7 @@ O objetivo do trabalho é implementar diferentes medidas de **centralidade em gr
 
 - **Nome**: Kevin Rodrigues Nunes   
 - **Turma**: ACH2024-2025104
+- Professor: Luciano Digiampietri (reponsável por todos os códigos presentes no .c base "completeERenomeie.c")
 
 ## 🧠 Conceitos abordados
 

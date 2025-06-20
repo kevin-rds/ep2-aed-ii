@@ -301,19 +301,18 @@ void centralidadeDeProximidade(Grafo* g, double* valores) {
   free(dist);
 }
 
-void caminhada(int** pred, double* valores, int origem, int destino){
-  if(pred[origem][destino] != origem){
-    valores[origem]++;
-    caminhada(pred, valores, pred[origem][destino], destino);
-  }
-  return;
-}
-
-
 
 /* Funcao que calcula a Centralidade de Intermediacao de todos os vertices. */
 void centralidadeDeIntermediacao(Grafo* g, double* valores) {
   int x, y;
+  int atual = -1;
+
+  //inicializa valores com 0
+  for(x=0; x<g->numVertices; x++){
+    valores[x] = 0.0;
+  }
+
+  //criação das matrizes a serem incluídas no Floyd-Warshall
   int** dist = (int**) malloc(sizeof(int*)*g->numVertices);
   for (x=0; x<g->numVertices; x++){
     dist[x] = (int*) malloc(sizeof(int)*g->numVertices);
@@ -323,18 +322,20 @@ void centralidadeDeIntermediacao(Grafo* g, double* valores) {
     pred[x] = (int*) malloc(sizeof(int)*g->numVertices);
   }
 
+
   calculaDistanciaFloydWarshall(g, dist, pred);
-  free(dist);
-  
-  for(x=0; x<g->numVertices; x++){
-    valores[x] = 0;
-  }
-  
+
   for(x=0; x<g->numVertices; x++){
     for(y=0; y<g->numVertices; y++){
-        caminhada(pred, valores, x, y);
+      atual = pred[x][y];
+      if(x!=y && dist[x][y] != INFINITO){
+        while(atual != x && atual != -1){
+          valores[atual] = valores[atual] + 1.0;
+          atual = pred[x][atual];
+        }
+      }
     }
-  }
+  }  
 
   for(x=0; x<g->numVertices; x++){
     valores[x] = valores[x]/((g->numVertices-1)*(g->numVertices-2));
