@@ -38,5 +38,5 @@ As medidas de centralidade implementadas são:
 ## 🛠️ Como compilar e executar
 
 ```bash
-gcc -o ep2 seuNumeroUSP.c
+gcc -o ep2 ep2.c
 ./ep2
