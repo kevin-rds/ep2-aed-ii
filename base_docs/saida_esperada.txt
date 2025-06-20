@@ -1,0 +1,164 @@
+PRIMEIRO EXEMPLO
+
+Imprimindo grafo (v=5; a=8)
+      0   1   2   3   4
+  0   0   1   1   0   0
+  1   0   0   1   1   1
+  2   0   0   0   1   0
+  3   0   0   0   0   1
+  4   1   0   0   0   0
+
+Centralidade de Grau:
+  v0	  v1	  v2	  v3	  v4	
+0.250	0.250	0.500	0.500	0.500	
+
+Centralidade de Proximidade:
+  v0	  v1	  v2	  v3	  v4	
+0.667	0.800	0.400	0.444	0.500	
+
+Centralidade de Intermediacao:
+  v0	  v1	  v2	  v3	  v4	
+0.500	0.250	0.000	0.250	0.500	
+
+Centralidade Page Rank: 0 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.200	0.200	0.200	0.200	0.200	
+
+Centralidade Page Rank: 1 iteracao
+  v0	  v1	  v2	  v3	  v4	
+0.200	0.115	0.172	0.257	0.257	
+
+Centralidade Page Rank: 10 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.241	0.130	0.167	0.212	0.251	
+
+Centralidade Page Rank: 100 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.240	0.132	0.169	0.211	0.247	
+
+
+
+SEGUNDO EXEMPLO [auto-lacos]
+
+Imprimindo grafo (v=5; a=10)
+      0   1   2   3   4
+  0   1   1   1   0   0
+  1   0   0   1   1   1
+  2   0   0   1   1   0
+  3   0   0   0   0   1
+  4   1   0   0   0   0
+
+Centralidade de Grau:
+  v0	  v1	  v2	  v3	  v4	
+0.250	0.250	0.500	0.500	0.500	
+
+Centralidade de Proximidade:
+  v0	  v1	  v2	  v3	  v4	
+0.667	0.800	0.400	0.444	0.500	
+
+Centralidade de Intermediacao:
+  v0	  v1	  v2	  v3	  v4	
+0.500	0.250	0.000	0.250	0.500	
+
+Centralidade Page Rank: 0 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.200	0.200	0.200	0.200	0.200	
+
+Centralidade Page Rank: 1 iteracao
+  v0	  v1	  v2	  v3	  v4	
+0.200	0.115	0.172	0.257	0.257	
+
+Centralidade Page Rank: 10 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.241	0.130	0.167	0.212	0.251	
+
+Centralidade Page Rank: 100 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.240	0.132	0.169	0.211	0.247	
+
+
+
+TERCEIRO EXEMPLO
+
+Imprimindo grafo (v=5; a=8)
+      0   1   2   3   4
+  0   0   0   1   0   0
+  1   0   0   1   0   0
+  2   1   1   0   1   1
+  3   0   0   1   0   0
+  4   0   0   1   0   0
+
+Centralidade de Grau:
+  v0	  v1	  v2	  v3	  v4	
+0.250	0.250	1.000	0.250	0.250	
+
+Centralidade de Proximidade:
+  v0	  v1	  v2	  v3	  v4	
+0.571	0.571	1.000	0.571	0.571	
+
+Centralidade de Intermediacao:
+  v0	  v1	  v2	  v3	  v4	
+0.000	0.000	1.000	0.000	0.000	
+
+Centralidade Page Rank: 0 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.200	0.200	0.200	0.200	0.200	
+
+Centralidade Page Rank: 1 iteracao
+  v0	  v1	  v2	  v3	  v4	
+0.073	0.073	0.710	0.073	0.073	
+
+Centralidade Page Rank: 10 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.145	0.145	0.421	0.145	0.145	
+
+Centralidade Page Rank: 100 iteracoes
+  v0	  v1	  v2	  v3	  v4	
+0.131	0.131	0.476	0.131	0.131	
+
+
+
+QUARTO EXEMPLO (grafo aleatorio)
+
+
+Imprimindo grafo (v=10; a=40)
+      0   1   2   3   4   5   6   7   8   9
+  0   0   0   0   0   0   0   1   0   0   1
+  1   1   0   1   0   0   0   0   0   1   1
+  2   1   0   0   1   0   1   1   1   1   0
+  3   1   1   0   0   0   1   1   1   0   0
+  4   0   0   0   0   1   1   0   1   1   1
+  5   1   0   0   0   0   1   0   0   0   0
+  6   0   1   1   1   0   1   1   0   1   1
+  7   0   1   0   0   0   1   0   0   1   1
+  8   0   0   0   0   1   0   0   0   0   0
+  9   0   1   1   1   0   0   0   1   0   0
+
+Centralidade de Grau:
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.444	0.444	0.333	0.333	0.111	0.556	0.333	0.444	0.556	0.556	
+
+Centralidade de Proximidade:
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.529	0.643	0.750	0.643	0.600	0.375	0.750	0.600	0.391	0.600	
+
+Centralidade de Intermediacao:
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.194	0.139	0.083	0.014	0.111	0.056	0.153	0.028	0.111	0.097	
+
+Centralidade Page Rank: 0 iteracoes
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.100	0.100	0.100	0.100	0.100	0.100	0.100	0.100	0.100	0.100	
+
+Centralidade Page Rank: 1 iteracao
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.152	0.089	0.072	0.065	0.100	0.103	0.089	0.089	0.107	0.135	
+
+Centralidade Page Rank: 10 iteracoes
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.136	0.091	0.079	0.071	0.100	0.092	0.096	0.090	0.099	0.146	
+
+Centralidade Page Rank: 100 iteracoes
+  v0	  v1	  v2	  v3	  v4	  v5	  v6	  v7	  v8	  v9	
+0.136	0.091	0.079	0.071	0.100	0.092	0.096	0.090	0.099	0.146	
+
