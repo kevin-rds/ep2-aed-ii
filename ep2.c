@@ -247,25 +247,46 @@ void exibeArranjoReais(double* arranjo, int n){
    www.each.usp.br/digiampietri/ACH2024/ep2/ep2.pdf        */
 
 
-/* Funcao que calcula a Centralidade de Grau de todos os vertices.*/
-void centralidadeDeGrau(Grafo* g, double* valores) {
-  int x,y;
-  double fator = g->numVertices - 1;
-  
-  for(x=0; x<g->numVertices; x++){
-    valores[x] = 0.0;
-  } //valores inicializado com 0 
+//As duas funções a seguir calculam, respectivamente, grau de entrada e de saída dos vértices de um grafo.
+//Serão utilizadas em "centralidadeDeGrau" e "centralidadePageRank"
 
-  for (x=0; x<g->numVertices; x++) {
-    for (y=0; y<g->numVertices; y++) {
-      if (g->matriz[x][y] && x!=y) {
-        valores[y] = valores[y] + 1/fator;
-      }//preenche valores com o grau de entrada de cada vertice
+int grauDeEntrada(Grafo* g, int v){
+  int x;
+  int grau = 0;
+
+  //laço que verifica existência de arestas entre cada vertice e o vértice v
+  for(x=0; x<g->numVertices; x++){
+    if(g->matriz[x][v] && x!=v){
+      grau++;
     }
   }
+
+  return grau;
 }
 
+int grauDeSaida(Grafo* g, int v){
+  int y;
+  int grau = 0;
 
+  //laço que verifica todas as arestas existentes do vertice v
+  for(y=0; y<g->numVertices; y++){
+    if(g->matriz[v][y] && v!=y){
+      grau ++;
+    }
+  }
+
+  return grau;
+}
+
+/* Funcao que calcula a Centralidade de Grau de todos os vertices.*/
+void centralidadeDeGrau(Grafo* g, double* valores) {
+  int x,y; 
+  
+  //laço que para cada vertice do grafo, calcula a centralidade de grau com base no seu grau de entrada
+  for (x=0; x<g->numVertices; x++) {
+    valores[x] = grauDeEntrada(g, x) / (double)(g->numVertices - 1);
+  }
+}
 
 
 /* Funcao que calcula a Centralidade de Proximidade de todos os vertices. */
@@ -283,10 +304,9 @@ void centralidadeDeProximidade(Grafo* g, double* valores) {
     pred[x] = (int*) malloc(sizeof(int)*g->numVertices);
   }
 
+  calculaDistanciaFloydWarshall(g, dist, pred); 
 
-  calculaDistanciaFloydWarshall(g, dist, pred);
-  free(pred); 
-  
+  //laço que armazena em valores[x] a soma das distâncias de x para todo vertice y do grafo.
   for(x=0; x<g->numVertices; x++){
     valores[x] = 0;
     for(y=0; y<g->numVertices; y++){
@@ -294,20 +314,26 @@ void centralidadeDeProximidade(Grafo* g, double* valores) {
     }
   }
 
+  //laço que aplica o divisor na soma das distâncias para efetivamente obter o grau de proximidade de cada vertice
   for(x=0; x<g->numVertices; x++){
     valores[x] = (g->numVertices-1)/valores[x];
   }
 
+  //laço que libera as matrizes dist e pred
+  for(x=0; x<g->numVertices; x++){
+    free(dist[x]);
+    free(pred[x]);
+  }
   free(dist);
+  free(pred);
 }
 
 
 /* Funcao que calcula a Centralidade de Intermediacao de todos os vertices. */
 void centralidadeDeIntermediacao(Grafo* g, double* valores) {
   int x, y;
-  int atual = -1;
 
-  //inicializa valores com 0
+  //inicializa vetor valores com 0
   for(x=0; x<g->numVertices; x++){
     valores[x] = 0.0;
   }
@@ -324,29 +350,79 @@ void centralidadeDeIntermediacao(Grafo* g, double* valores) {
 
 
   calculaDistanciaFloydWarshall(g, dist, pred);
+  
+  int atual;
 
+  //laços "x" e "y" tem como função percorrer toda a matriz de predecessores, isto é, caminhar por todos os caminhos minimos
   for(x=0; x<g->numVertices; x++){
     for(y=0; y<g->numVertices; y++){
-      atual = pred[x][y];
-      if(x!=y && dist[x][y] != INFINITO){
-        while(atual != x && atual != -1){
-          valores[atual] = valores[atual] + 1.0;
-          atual = pred[x][atual];
+      
+      atual = pred[x][y]; //iniciando o caminho de x a y
+      
+      if(x!=y && dist[x][y] != INFINITO){ //se o caminho não for um auto-laço ou não existir, entra na condição
+        
+        while(atual != x && atual != -1){ //enquanto o atual for diferente da origem (x) e não ser um caminho invalido...
+          
+          valores[atual] = valores[atual] + 1.0; //o vertice atual esta presente em mais um caminho minimo 
+          atual = pred[x][atual]; //atual passa a ser o proximo vertice do caminho de x a y
+
         }
+
       }
     }
   }  
 
+  //laço que aplica o divisor para efetivamente obter o grau de intermediacao de cada vertice
   for(x=0; x<g->numVertices; x++){
     valores[x] = valores[x]/((g->numVertices-1)*(g->numVertices-2));
   }
+
+  //libera a memoria das metrizes dist e pred
+  for(x=0; x<g->numVertices; x++){
+    free(dist[x]);
+    free(pred[x]);
+  }
+  free(dist);
+  free(pred);
 }
 
 /* Funcao que calcula a Centralidade Page Rank de todos os vertices. */
 void centralidadePageRank(Grafo* g, double* valores, int iteracoes) {
+  int x, y, z, i;
+  const double d = 0.85;
+  double* valoresTemp = (double*) malloc(sizeof(double)*g->numVertices); //esse vetor sera usado para armazenar o pageRank real de cada iteracao
 
-  /* COMPLETE/IMPLEMENTE ESTA FUNCAO */
+  //inicalizando Valores
+  for(x=0; x<g->numVertices; x++){
+    valores[x] = 1/(double)g->numVertices;
+  }
 
+  double somatoria;
+
+  for(i=0; i<iteracoes; i++){ //laço que roda o numero de iteracoes pre-estabelecido
+    for(x=0; x<g->numVertices; x++){ //laco que calcula o page rank do vertice x na iteracao i
+      
+      somatoria = 0.0;
+      
+      for(y = 0; y<g->numVertices; y++){ //para todos os demais vertices
+        
+        if(g->matriz[y][x] && y!=x){ //se y apontar para x (e y nao for x)
+          
+          somatoria = somatoria + valores[y]/(double)grauDeSaida(g, y); //calcula a somatoria 
+        
+        }
+      }
+      valoresTemp[x] = (1-d)/(double)g->numVertices + d * somatoria; //atribui pageRank atual no vetor valores temporario
+    }
+    
+    //adiciona os novos pageRank no vetor Valores
+    for(x=0; x<g->numVertices; x++){
+      valores[x] = valoresTemp[x];
+    }
+
+  }
+
+  free(valoresTemp);
 }
 
 
@@ -360,19 +436,19 @@ void testaFuncoes(Grafo* g, int n){
 
   double* valoresReais = (double*)malloc(sizeof(double)*n);
 
-/*  printf("Centralidade de Grau:\n");
+  printf("Centralidade de Grau:\n");
   centralidadeDeGrau(g, valoresReais);
   exibeArranjoReais(valoresReais, n);
 
   printf("Centralidade de Proximidade:\n");
   centralidadeDeProximidade(g, valoresReais);
   exibeArranjoReais(valoresReais, n);
-*/
+
   printf("Centralidade de Intermediacao:\n");
   centralidadeDeIntermediacao(g, valoresReais);
   exibeArranjoReais(valoresReais, n);
 
-  /*printf("Centralidade Page Rank: 0 iteracoes\n");
+  printf("Centralidade Page Rank: 0 iteracoes\n");
   centralidadePageRank(g, valoresReais, 0);
   exibeArranjoReais(valoresReais, n);
 
@@ -386,7 +462,7 @@ void testaFuncoes(Grafo* g, int n){
 
   printf("Centralidade Page Rank: 100 iteracoes\n");
   centralidadePageRank(g, valoresReais, 100);
-  exibeArranjoReais(valoresReais, n);*/
+  exibeArranjoReais(valoresReais, n);
 
   free(valoresReais);
 }
@@ -456,6 +532,8 @@ int main() {
   exibeGrafo(g3);
 
   testaFuncoes(g3, n);
+
+  printf("Resolucao das funcoes de centralidade por Kevin Rodrigues\n\n"); 
 
   return 0;
 }
