@@ -2,7 +2,7 @@
 
 ## 📌 Descrição
 
-Este repositório contém a implementação do **Segundo Exercício-Programa** da disciplina **ACH2024 - Estruturas de Dados**, ministrada pelo Prof. Luciano Antonio Digiampietri, na Universidade de São Paulo (USP).
+Este repositório contém a implementação do **Segundo Exercício-Programa** da disciplina **ACH2024 - Algoritmos e Estruturas de Dados**, ministrada pelo Prof. Luciano Antonio Digiampietri, na Universidade de São Paulo (USP).
 
 O objetivo do trabalho é implementar diferentes medidas de **centralidade em grafos direcionados e não ponderados**, com aplicação no contexto de **redes sociais**.
 
@@ -10,7 +10,7 @@ O objetivo do trabalho é implementar diferentes medidas de **centralidade em gr
 
 - **Nome**: Kevin Rodrigues Nunes   
 - **Turma**: ACH2024-2025104
-- Professor: Luciano Digiampietri (reponsável por todos os códigos presentes no .c base "completeERenomeie.c")
+- **Professor**: Luciano Digiampietri (reponsável por todos os códigos presentes no .c base "completeERenomeie.c")
 
 ## 🧠 Conceitos abordados
 
@@ -28,11 +28,18 @@ As medidas de centralidade implementadas são:
 4. **PageRank**  
    Mede a importância de um nó com base na importância dos nós que apontam para ele, utilizando um algoritmo iterativo com fator de amortecimento.
 
-## 📂 Estrutura do projeto
+## 🔍 Estrutura do Projeto
 
-- `completeERenomeie.c` – Arquivo base disponibilizado pela disciplina.
-- `ep2.c` – Arquivo final com todas as funções implementadas, pronto para submissão.
-- `saida.txt` – Arquivo com os resultados gerados pelos testes fornecidos no enunciado.
+```plaintext
+📁 ep2-aed-ii
+├── ep2.c                        # Arquivo principal do projeto
+├── saida_obtida.txt             # Saída gerada pela execução
+├── README.md                    # Documentação do projeto
+├── base_docs/                   # Arquivos fornecidos como base
+│   ├── ep2.pdf                  # Enunciado do exercício-programa
+│   ├── completeERenomeie.c      # Código base a ser completado
+│   └── saida_esperada.txt       # Exemplo de saída esperada
+```
 
 > ⚠️ O código foi escrito respeitando as assinaturas e estruturas fornecidas.
 
